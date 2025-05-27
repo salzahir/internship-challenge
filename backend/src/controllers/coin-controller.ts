@@ -1,11 +1,9 @@
-import { fetchCoinData } from '../services/api';
-import { apiHealthCheck } from '../services/api';
+import { fetchCoinData, apiHealthCheck } from '../services/api';
 import { Request, Response } from 'express';
-
 
 async function getHome(req: Request, res: Response) {
     const health = await apiHealthCheck();
-    return res.json({
+    res.json({
         message: "Welcome to the Coin API",
         health: health,
         timestamp: new Date().toISOString()
