@@ -20,6 +20,19 @@ async function apiHealthCheck() {
     }
 }
 
+function parseCoinSummary(coin: any) {
+    return {
+        id: coin.id,
+        symbol: coin.symbol,
+        name: coin.name,
+        current_price: coin.current_price,
+        market_cap: coin.market_cap,
+        total_volume: coin.total_volume,
+        price_change_percentage_24h: coin.price_change_percentage_24h,
+        market_cap_rank: coin.market_cap_rank
+    };
+}
+
 async function fetchCoinData(symbol: string = "default") {
     console.log("Fetching coin data...");
     try {
@@ -28,7 +41,7 @@ async function fetchCoinData(symbol: string = "default") {
         const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${symbol}&x_cg_demo_api_key=${apiKey}`;
         const response = await axios.get(url);
         console.log("Response received:", response.data);
-        return response.data;
+        return parseCoinSummary(response.data[0]);
     } catch (error) {
         console.error("Error fetching coin data:", error);
         throw error;
