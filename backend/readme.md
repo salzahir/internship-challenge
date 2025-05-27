@@ -1,44 +1,100 @@
-# Backend Internship Challenge – Tekly Studio
+# CoinStats API – Real-Time Crypto Data in One Line
 
-This challenge assesses your API design and data handling abilities.
+A lightweight REST API that fetches and provides summary statistics for cryptocurrencies using the CoinGecko API.
 
----
+## Tech Stack
+- Node.js
+- Express.js
+- TypeScript
+- Axios
+- dotenv
+- express-rate-limit
 
-## ⚙️ Challenge Prompt
+## Getting Started
 
-Build a lightweight REST API that:
-- Accepts a cryptocurrency name or symbol as input
-- Fetches live or historical data from a public API (e.g., CoinGecko)
-- Returns summary statistics (e.g., price, percent change, volume)
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the root directory and add your CoinGecko API key:
+   ```
+   COIN_API_KEY=your_api_key_here
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Use Python (Flask, FastAPI) or Node.js.
+## API Endpoints
 
----
+### Health Check
+**Request:**
+- Method: GET
+- URL: `http://localhost:3000/health`
 
-## 📦 What to Include
+**Response:**
+```json
+{
+  "status": "healthy",
+  "version": "1.0.0",
+  "timestamp": "2024-03-14T12:00:00.000Z",
+  "uptime": 3600,
+  "environment": "development"
+}
+```
 
-- API code and routing
-- Example `curl` or Postman requests
-- Any tests or validation logic
-- A `README.md` describing:
-  - Tech stack
-  - How to run/test locally
-  - What you'd build next with more time
+### Get Home
+**Request:**
+- Method: GET
+- URL: `http://localhost:3000/`
 
----
+**Postman Setup:**
+1. Create a new request
+2. Set method to GET
+3. Enter URL: `http://localhost:3000/`
+4. Click Send
 
-## 📝 How to Submit
+### Get Coin Data
+**Request:**
+- Method: GET
+- URL: `http://localhost:3000/coin/{symbol}`
+- Example: `http://localhost:3000/coin/bitcoin`
 
-1. Fork this repository.
-2. Complete the challenge in this folder in your fork.
-3. Fill out the submission form:  
-   👉 [Submit Here](https://forms.gle/bEpchsNKHHwcyZ47A)
+**Postman Setup:**
+1. Create a new request
+2. Set method to GET
+3. Enter URL: `http://localhost:3000/coin/bitcoin`
+4. Click Send
 
----
+## Response Format
 
-## 🧠 Evaluation Criteria
+The API returns cryptocurrency data in the following format:
+```json
+{
+  "id": "bitcoin",
+  "symbol": "btc",
+  "name": "Bitcoin",
+  "current_price": 50000,
+  "market_cap": 1000000000,
+  "total_volume": 50000000,
+  "price_change_percentage_24h": 2.5,
+  "market_cap_rank": 1
+}
+```
 
-- Code quality and organization
-- API structure and robustness
-- Documentation and communication
-- Creativity or bonus features
+## Features
+
+- Real-time cryptocurrency data
+- Rate limiting (100 requests per 15 minutes)
+- Health check endpoint
+- Error handling
+- TypeScript implementation
+
+## Future Improvements
+
+- [ ] Add request validation and user input sanitation  
+- [ ] Improve error handling for edge cases  
+- [ ] Add unit/integration tests with Jest or Supertest  
+- [ ] Expand to support historical data and charts  
+- [ ] Deploy to Vercel or Render for public access  
